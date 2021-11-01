@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable , Inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { LogInResponse } from '../_models/log-in-response';
 import { RegistrationResponseModel } from '../_models/registration-response-model';
@@ -16,7 +17,7 @@ export class AuthenticationService {
   public authChanged = this._authChanged.asObservable();
   _baseUrl : string ;
   
-  constructor(private _http: HttpClient, @Inject('BASE_URL') baseUrl: string) { 
+  constructor(private _http: HttpClient, @Inject('BASE_URL') baseUrl: string , private route:Router) { 
     this._baseUrl = baseUrl;
   }
 
@@ -33,5 +34,11 @@ export class AuthenticationService {
 
   public logIn = (route:string , body:UserLogIn)=>{
     return this._http.post<LogInResponse>(this._baseUrl+route , body);
+  }
+
+  public logOut = ()=>{
+    localStorage.removeItem("token");
+    this.sendAuthStateChangeNotification(false);
+    this.route.navigate(['']);
   }
 }

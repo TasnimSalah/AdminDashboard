@@ -19,7 +19,7 @@
         class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
         [ngClass]="{ show: isExpanded }"
       >
-        <ul class="navbar-nav flex-grow">
+        <ul *ngIf='isUserAuthenticated' class="navbar-nav flex-grow">
           <li
             class="nav-item"
             [routerLinkActive]="['link-active']"
@@ -36,6 +36,21 @@
             <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
               >Fetch data</a
             >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" (click)="logOut()"
+              >Logout</a
+            >
+          </li>
+        </ul>
+        <ul *ngIf='!isUserAuthenticated' class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+            <a class="nav-link"[routerLink]="['/authentication/login']" routerLinkActive="active" 
+              [routerLinkActiveOptions]="{exact: true}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"[routerLink]="['/authentication/register']" routerLinkActive="active" 
+              [routerLinkActiveOptions]="{exact: true}">Register</a>
           </li>
         </ul>
       </div>
