@@ -21,6 +21,7 @@ export class LogInUserComponent implements OnInit {
       data => {
         console.log("Success Login" , data);
         localStorage.setItem("token", data.token);
+        this.auth.sendAuthStateChangeNotification(data.isAuthSuccessful);
         this.router.navigate(['']);
 
       },
