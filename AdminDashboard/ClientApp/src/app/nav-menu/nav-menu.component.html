@@ -38,6 +38,10 @@
             >
           </li>
           <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/claims']" routerLinkActive="active" 
+              [routerLinkActiveOptions]="{exact: true}"> Claims </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link text-dark" (click)="logOut()"
               >Logout</a
             >

@@ -48,6 +48,7 @@ namespace AdminDashboard.Controllers
                 return BadRequest(new RegistrationResponseModel { Errors = errors });
             }
 
+            await _userManager.AddToRoleAsync(user, "User");
             return StatusCode(201);
         }
         
@@ -64,7 +65,7 @@ namespace AdminDashboard.Controllers
             }
 
             var signingCredentials = _jwtService.GetSigningCredentials();
-            var claims = _jwtService.GetClaims(User);
+            var claims = await _jwtService.GetClaims(User);
             var tokenOptions = _jwtService.GenerateTokenOptions(signingCredentials, claims);
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
             return Ok(new LogInResponseModel { IsAuthSuccessful = true, Token = token });
